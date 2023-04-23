@@ -1,0 +1,64 @@
+<html>
+  <head>
+    <title>Pure Editor</title>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor-only.min.css" />
+    <style>
+      main {
+        max-width: 880px;
+        margin: 50px auto;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid;
+      }
+      .mb-5 {
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="mb-5">
+        <button onclick="javascript:handleCopyHTML();">Copy HTML</button>
+        <button onclick="javascript:handleCopyMarkdown();">Copy Markdown</button>
+      </div>
+      <div id="editor"></div>
+    </main>
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+    <script>
+      const copyToClipboard = str => {
+        const el = document.createElement('textarea')
+        el.value = str
+        el.setAttribute('readonly', '')
+        el.style.position = 'absolute'
+        el.style.left = '-9999px'
+        document.body.appendChild(el)
+        el.select()
+        document.execCommand('copy')
+        document.body.removeChild(el)
+      }
+      const editor = new toastui.Editor({
+        el: document.querySelector('#editor'),
+        height: '800px',
+        initialEditType: 'wysiwyg'
+      });
+      const handleCopyHTML = () => {
+        const content = editor.getHTML()
+
+        copyToClipboard(content)
+        alert('Copied HTML to clipboard')
+      }
+      const handleCopyMarkdown = () => {
+        const content = editor.getMarkdown()
+
+        copyToClipboard(content)
+        alert('Copy Markdown to clipboard')
+      }
+    </script>
+  </body>
+</html>
